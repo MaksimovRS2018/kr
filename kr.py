@@ -5,6 +5,10 @@ import control as con
 import sympy as sp
 
 W0 = c.tf(1, 1)
+# W1 = c.tf([50, 2], [1, 14]) #пример неустойчивой системы, чтобы поиграться
+# W2 = c.tf([1, 25], [2, 1])
+# W3 = c.tf(15, [0.1, 1])
+
 W1 = c.tf([50, 2], [1, 0])
 W2 = c.tf(3, [0.2, 1])
 W3 = c.tf(0.3, [4, 1])
@@ -17,10 +21,6 @@ W9 = W3 * W5
 W10 = W9 + W8
 W = W10.feedback(W0,sign=1) #sign = -1 ->  indicates positive feedback
 print(W)
-
-# W1 = c.tf([50, 2], [1, 14]) #пример неустойчивой системы, чтобы поиграться
-# W2 = c.tf([1, 25], [2, 1])
-# W3 = c.tf(15, [0.1, 1])
 
 # для моей упрощенной
 # s = sp.symbols("s", real=True)
@@ -67,7 +67,7 @@ def nyquis(W):
  то САУ будет не устойчивой"""
 def pzmap(W):
     f = con.pzmap(W)
-    plt.title("Расположение нулей на комплексной плоскости")
+    plt.title("Расположение полюсов на комплексной плоскости")
     plt.grid(True)
     plt.show()
     g = f[0]  # возвращает список всех полюсов - корней знаменателя
@@ -77,7 +77,7 @@ def pzmap(W):
     while D and j < len(g):
         r = g[j].real
         if float(r) <= 0.000000:
-            print("Левый корень = " + str(r))
+            # print("Левый корень = " + str(r))
             D = True
             if float(r) == 0.0:
                 G = True
